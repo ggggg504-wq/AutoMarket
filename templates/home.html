@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+
+    <h1 class="mt-3">Найди машину своей мечты</h1>
+    <h3 class="mb-5">Покупка и продажа машин по всему Казахстану</h3>
+
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-6">
+            <form class="d-flex">
+                <div class="input-group">
+                    <input
+                        class="form-control form-control-lg"
+                        type="search"
+                        placeholder="Введите марку или название машины"
+                        aria-label="Search"
+                    >
+                    <button class="btn btn-outline-dark" type="submit">
+                        Найти
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <h4 class="mb-3">Популярные марки</h4>
+
+    <div class="btn-group mb-5">
+        <button class="btn btn-outline-dark">BMW</button>
+        <button class="btn btn-outline-dark">Mercedes Benz</button>
+        <button class="btn btn-outline-dark">Audi</button>
+        <button class="btn btn-outline-dark">Toyota</button>
+        <button class="btn btn-outline-dark">Lexus</button>
+    </div>
+
+    <h4 class="mb-4">Последние объявления</h4>
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="card h-100">
+                <img src="{% static 'images/img_1.png' %}" class="card-img-top" height="220" alt="Mercedes-Benz E-Класс 220">
+
+                <div class="card-body">
+                    <h5 class="card-title">Mercedes-Benz E-Класс 220</h5>
+                    <p class="card-text fw-bold">2 000 000 ₸</p>
+                </div>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">1994 • 2.8 • Бензин</li>
+                    <li class="list-group-item">Астана</li>
+                </ul>
+
+                <div class="card-body">
+                    <a href="#" class="btn btn-outline-dark">Подробнее</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100">
+                <img src="{% static 'images/img.png' %}" class="card-img-top" height="220" alt="BMW E34">
+
+                <div class="card-body">
+                    <h5 class="card-title">BMW E34</h5>
+                    <p class="card-text fw-bold">2 200 000 ₸</p>
+                </div>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">1992 • 2.5 • Бензин</li>
+                    <li class="list-group-item">Астана</li>
+                </ul>
+
+                <div class="card-body">
+                    <a href="#" class="btn btn-outline-dark">Подробнее</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100">
+                <img src="{% static 'images/img_2.png' %}" class="card-img-top" height="220" alt="Audi 100">
+
+                <div class="card-body">
+                    <h5 class="card-title">Audi 100</h5>
+                    <p class="card-text fw-bold">1 600 000 ₸</p>
+                </div>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">1994 • 3.0 • Бензин</li>
+                    <li class="list-group-item">Астана</li>
+                </ul>
+
+                <div class="card-body">
+                    <a href="#" class="btn btn-outline-dark">Подробнее</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
