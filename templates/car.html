@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <img src="{% static 'images/img_1.png' %}" style="max-height: 450px; width: 100%; object-fit: cover;" class="img-fluid rounded shadow" alt="{{ avto.model }}">
+    </div>
+    <div class="col-md-6">
+          <h1>{{ avto.brand }} {{ avto.model }}</h1>
+          <h2>{{ avto.price }} ₸</h2>
+        <ul class="list-group">
+          <li class="list-group-item">Год выпуска: {{ avto.year }}</li>
+          <li class="list-group-item">Коробка передач: {{ avto.transmission }}</li>
+          <li class="list-group-item">Тип топлива: {{ avto.fuel }}</li>
+          <li class="list-group-item">Пробег: {{ avto.mileage }}</li>
+          <li class="list-group-item">Город: {{ avto.city }}</li>
+          <li class="list-group-item">Объем двигателя: {{ avto.engine }}</li>
+        </ul>
+          <h3>Описание</h3>
+          <p>{{ avto.description }}</p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

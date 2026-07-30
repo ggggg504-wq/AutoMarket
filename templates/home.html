@@ -40,67 +40,30 @@
 
     <div class="row">
 
+        {% for car in cars %}
+
         <div class="col-md-4">
             <div class="card h-100">
                 <img src="{% static 'images/img_1.png' %}" class="card-img-top" height="220" alt="Mercedes-Benz E-Класс 220">
 
                 <div class="card-body">
-                    <h5 class="card-title">Mercedes-Benz E-Класс 220</h5>
-                    <p class="card-text fw-bold">2 000 000 ₸</p>
+                    <h5 class="card-title">{{ car.model }}</h5>
+                    <p class="card-text fw-bold">{{ car.price }}</p>
                 </div>
 
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">1994 • 2.8 • Бензин</li>
-                    <li class="list-group-item">Астана</li>
+                    <li class="list-group-item">{{ car.year }} • {{ car.engine }} • {{ car.fuel }}</li>
+                    <li class="list-group-item">{{ car.city }}</li>
                 </ul>
 
                 <div class="card-body">
-                    <a href="#" class="btn btn-outline-dark">Подробнее</a>
+                    <a href="http://127.0.0.1:8000/cars/{{ car.id }}" class="btn btn-outline-dark">Подробнее</a>
                 </div>
             </div>
         </div>
+        {% endfor %}
 
-        <div class="col-md-4">
-            <div class="card h-100">
-                <img src="{% static 'images/img.png' %}" class="card-img-top" height="220" alt="BMW E34">
 
-                <div class="card-body">
-                    <h5 class="card-title">BMW E34</h5>
-                    <p class="card-text fw-bold">2 200 000 ₸</p>
-                </div>
-
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">1992 • 2.5 • Бензин</li>
-                    <li class="list-group-item">Астана</li>
-                </ul>
-
-                <div class="card-body">
-                    <a href="#" class="btn btn-outline-dark">Подробнее</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card h-100">
-                <img src="{% static 'images/img_2.png' %}" class="card-img-top" height="220" alt="Audi 100">
-
-                <div class="card-body">
-                    <h5 class="card-title">Audi 100</h5>
-                    <p class="card-text fw-bold">1 600 000 ₸</p>
-                </div>
-
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">1994 • 3.0 • Бензин</li>
-                    <li class="list-group-item">Астана</li>
-                </ul>
-
-                <div class="card-body">
-                    <a href="#" class="btn btn-outline-dark">Подробнее</a>
-                </div>
-            </div>
-        </div>
-
-    </div>
 
 </div>
 
