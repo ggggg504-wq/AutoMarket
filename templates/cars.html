@@ -21,7 +21,7 @@
 
                     <div class="col-md-9">
                         <a href="{% url 'avto' car.id %}">
-                            <h4>{{ car.brand }} {{ car.model }}</h4>
+                            <h4>{{ car.brand.name }} {{ car.model }}</h4>
                         </a>
 
                         <h5>{{ car.price }} ₸</h5>
