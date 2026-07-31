@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+
+        {% for car in cars %}
+
+        <div class="col-12 mb-3">
+            <div class="border rounded p-3">
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <img src="{% static 'images/img_1.png' %}"
+                             class="img-fluid rounded"
+                             style="width: 250px; height: 170px; object-fit: cover;"
+                             alt="{{ car.model }}">
+                    </div>
+
+                    <div class="col-md-9">
+                        <a href="{% url 'avto' car.id %}">
+                            <h4>{{ car.brand }} {{ car.model }}</h4>
+                        </a>
+
+                        <h5>{{ car.price }} ₸</h5>
+
+                        <p>
+                            {{ car.year }} •
+                            {{ car.engine }} •
+                            {{ car.fuel }} •
+                            {{ car.city }}
+                        </p>
+
+                        <p>{{ car.description }}</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}

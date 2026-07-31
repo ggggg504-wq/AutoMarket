@@ -4,4 +4,8 @@ from .models import Car
 
 def car(request, id):
     avto = Car.objects.get(id=id)
-    return render(request, 'car.html', {'avto': avto})
+    return render(request, 'car_detail.html', {'avto': avto})
+
+def cars(request):
+    cars = Car.objects.all()
+    return render(request, 'cars.html', {'cars': cars})
