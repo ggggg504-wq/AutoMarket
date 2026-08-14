@@ -8,24 +8,6 @@
     <h1 class="mt-3">Найди машину своей мечты</h1>
     <h3 class="mb-5">Покупка и продажа машин по всему Казахстану</h3>
 
-    <div class="row justify-content-center mb-5">
-        <div class="col-md-6">
-            <form class="d-flex">
-                <div class="input-group">
-                    <input
-                        class="form-control form-control-lg"
-                        type="search"
-                        placeholder="Введите марку или название машины"
-                        aria-label="Search"
-                    >
-                    <button class="btn btn-outline-dark" type="submit">
-                        Найти
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <h4 class="mb-3">Популярные марки</h4>
 
     <div class="btn-group mb-5">
@@ -47,7 +29,7 @@
                 <img src="{% static 'images/img_1.png' %}" class="card-img-top" height="220" alt="Mercedes-Benz E-Класс 220">
 
                 <div class="card-body">
-                    <h5 class="card-title">{{ car.model }}</h5>
+                    <h5 class="card-title">{{ car.brand.name }} {{ car.model }}</h5>
                     <p class="card-text fw-bold">{{ car.price }}</p>
                 </div>
 
