@@ -9,5 +9,5 @@ def car(request, car_id):
 
 
 def cars(request):
-    f = CarsFilter(request.GET, queryset=Car.objects.all())
-    return render(request, 'cars.html', {'filter': f})
+    qs_filter = CarsFilter(request.GET, queryset=Car.objects.all())
+    return render(request, 'cars.html', {'filter': qs_filter})
