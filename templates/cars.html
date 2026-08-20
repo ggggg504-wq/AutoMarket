@@ -3,29 +3,241 @@
 
 {% block content %}
 
-    <div class="row justify-content-center mb-5">
-        <div class="col-md-6">
-            <form class="d-flex" method="get">
-                <div class="input-group">
-                    <input
-                        class="form-control form-control-lg"
-                        type="search"
-                        name="search"
-                        placeholder="Введите марку или название машины"
-                        aria-label="Search"
-                    >
-                    <button class="btn btn-outline-dark" type="submit">
-                        Найти
-                    </button>
+<div class="container mb-5">
+    <div class="card border-0 shadow-sm rounded-4 p-4">
+        <h4 class="mb-4">Фильтры</h4>
+
+        <form method="get">
+            <div class="input-group">
+                <input
+                    class="form-control form-control-lg"
+                    type="search"
+                    name="search"
+                    placeholder="Введите марку или название машины"
+                    value="{{ filter.form.search.value|default:'' }}"
+                    aria-label="Search"
+                >
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Марка</label>
+                    <select name="brand" class="form-select">
+                        <option value="">Все марки</option>
+
+                        <option value="toyota" {% if filter.form.brand.value == 'toyota' %}selected{% endif %}>
+                            Toyota
+                        </option>
+
+                        <option value="bmw" {% if filter.form.brand.value == 'bmw' %}selected{% endif %}>
+                            BMW
+                        </option>
+
+                        <option value="mercedes-benz" {% if filter.form.brand.value == 'mercedes-benz' %}selected{% endif %}>
+                            Mercedes-Benz
+                        </option>
+
+                        <option value="audi" {% if filter.form.brand.value == 'audi' %}selected{% endif %}>
+                            Audi
+                        </option>
+
+                        <option value="volkswagen" {% if filter.form.brand.value == 'volkswagen' %}selected{% endif %}>
+                            Volkswagen
+                        </option>
+
+                        <option value="ford" {% if filter.form.brand.value == 'ford' %}selected{% endif %}>
+                            Ford
+                        </option>
+
+                        <option value="chevrolet" {% if filter.form.brand.value == 'chevrolet' %}selected{% endif %}>
+                            Chevrolet
+                        </option>
+
+                        <option value="honda" {% if filter.form.brand.value == 'honda' %}selected{% endif %}>
+                            Honda
+                        </option>
+
+                        <option value="nissan" {% if filter.form.brand.value == 'nissan' %}selected{% endif %}>
+                            Nissan
+                        </option>
+
+                        <option value="mazda" {% if filter.form.brand.value == 'mazda' %}selected{% endif %}>
+                            Mazda
+                        </option>
+
+                        <option value="hyundai" {% if filter.form.brand.value == 'hyundai' %}selected{% endif %}>
+                            Hyundai
+                        </option>
+
+                        <option value="kia" {% if filter.form.brand.value == 'kia' %}selected{% endif %}>
+                            Kia
+                        </option>
+
+                        <option value="lexus" {% if filter.form.brand.value == 'lexus' %}selected{% endif %}>
+                            Lexus
+                        </option>
+
+                        <option value="volvo" {% if filter.form.brand.value == 'volvo' %}selected{% endif %}>
+                            Volvo
+                        </option>
+
+                        <option value="skoda" {% if filter.form.brand.value == 'skoda' %}selected{% endif %}>
+                            Skoda
+                        </option>
+
+                        <option value="subaru" {% if filter.form.brand.value == 'subaru' %}selected{% endif %}>
+                            Subaru
+                        </option>
+
+                        <option value="porsche" {% if filter.form.brand.value == 'porsche' %}selected{% endif %}>
+                            Porsche
+                        </option>
+
+                        <option value="land-rover" {% if filter.form.brand.value == 'land-rover' %}selected{% endif %}>
+                            Land Rover
+                        </option>
+
+                        <option value="jeep" {% if filter.form.brand.value == 'jeep' %}selected{% endif %}>
+                            Jeep
+                        </option>
+                    </select>
                 </div>
-            </form>
-        </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Город</label>
+                    <select name="city" class="form-select">
+                        <option value="">Все города</option>
+                        <option value="astana" {% if filter.form.city.value == 'astana' %}selected{% endif %}>
+                            Астана
+                        </option>
+                        <option value="almaty" {% if filter.form.city.value == 'almaty' %}selected{% endif %}>
+                            Алматы
+                        </option>
+                        <option value="karaganda" {% if filter.form.city.value == 'karaganda' %}selected{% endif %}>
+                            Караганда
+                        </option>
+                        <option value="aktobe" {% if filter.form.city.value == 'aktobe' %}selected{% endif %}>
+                            Актобе
+                        </option>
+                        <option value="atyrau" {% if filter.form.city.value == 'atyrau' %}selected{% endif %}>
+                            Атырау
+                        </option>
+                        <option value="shymkent" {% if filter.form.city.value == 'shymkent' %}selected{% endif %}>
+                            Шымкент
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Цена, ₸</label>
+
+                    <div class="row g-2">
+                        <div class="col-md-6">
+                            <input
+                                type="number"
+                                name="price_min"
+                                class="form-control"
+                                value="{{ filter.form.price_min.value|default_if_none:'' }}"
+                                placeholder="От">
+                        </div>
+
+                        <div class="col-md-6">
+                            <input
+                                type="number"
+                                name="price_max"
+                                class="form-control"
+                                value="{{ filter.form.price_max.value|default_if_none:'' }}"
+                                placeholder="До"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Год выпуска</label>
+
+                    <div class="row g-2">
+                        <div class="col-md-6">
+                            <input
+                                type="number"
+                                name="year_min"
+                                class="form-control"
+                                value="{{ filter.form.year_min.value|default_if_none:'' }}"
+                                placeholder="От"
+                            >
+                        </div>
+
+                        <div class="col-md-6">
+                            <input
+                                type="number"
+                                name="year_max"
+                                class="form-control"
+                                value="{{ filter.form.year_max.value|default_if_none:'' }}"
+                                placeholder="До"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Топливо</label>
+                    <select name="fuel" class="form-select">
+                        <option value="">Любое</option>
+                        <option value="petrol" {% if filter.form.fuel.value == 'petrol' %}selected{% endif %}>
+                            Бензин
+                        </option>
+                        <option value="diesel" {% if filter.form.fuel.value == 'diesel' %}selected{% endif %}>
+                            Дизель
+                        </option>
+                        <option value="gas" {% if filter.form.fuel.value == 'gas' %}selected{% endif %}>
+                            Газ
+                        </option>
+                        <option value="hybrid" {% if filter.form.fuel.value == 'hybrid' %}selected{% endif %}>
+                            Гибрид
+                        </option>
+                        <option value="electric" {% if filter.form.fuel.value == 'electric' %}selected{% endif %}>
+                            Электро
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Коробка передач</label>
+                    <select name="transmission" class="form-select">
+                        <option value="">Любая</option>
+                        <option value="manual" {% if filter.form.transmission.value == 'manual' %}selected{% endif %}>
+                            МКПП
+                        </option>
+                        <option value="automatic" {% if filter.form.transmission.value == 'automatic' %}selected{% endif %}>
+                            АКПП
+                        </option>
+                        <option value="cvt" {% if filter.form.transmission.value == 'cvt' %}selected{% endif %}>
+                            Вариатор
+                        </option>
+                        <option value="robot" {% if filter.form.transmission.value == 'robot' %}selected{% endif %}>
+                            Робот
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-12 d-flex gap-2 mt-4">
+                    <button type="submit" class="btn btn-dark">
+                        Показать автомобили
+                    </button>
+
+                    <a href="{% url 'cars' %}" class="btn btn-outline-secondary">
+                        Сбросить
+                    </a>
+                </div>
+            </div>
+        </form>
     </div>
+</div>
 
 <div class="container">
     <div class="row">
 
-        {% for car in cars %}
+        {% for car in filter.qs %}
 
         <div class="col-12 mb-3">
             <div class="border rounded p-3">

@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'accounts',
     'cars',
     'django_bootstrap5',
+    'django_filters',
 
     'django.contrib.admin',
     'django.contrib.auth',
