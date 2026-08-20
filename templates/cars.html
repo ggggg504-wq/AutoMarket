@@ -20,6 +20,32 @@
             </div>
 
             <div class="row g-3">
+                <div class="col-12">
+                    <label class="form-label">Сортировка</label>
+                    <select name="ordering" class="form-select">
+                        <option value="" {% if not filter.form.ordering.value.0 %}selected{% endif %}>
+                            По умолчанию
+                        </option>
+                        <option value="price" {% if filter.form.ordering.value.0 == 'price' %}selected{% endif %}>
+                            Цена: по возрастанию
+                        </option>
+                        <option value="-price" {% if filter.form.ordering.value.0 == '-price' %}selected{% endif %}>
+                            Цена: по убыванию
+                        </option>
+                        <option value="created_at" {% if filter.form.ordering.value.0 == 'created_at' %}selected{% endif %}>
+                            По дате публикации: сначала новые
+                        </option>
+                        <option value="-created_at" {% if filter.form.ordering.value.0 == '-created_at' %}selected{% endif %}>
+                            По дате публикации: сначала старые
+                        </option>
+                        <option value="year" {% if filter.form.ordering.value.0 == 'year' %}selected{% endif %}>
+                            По году выпуска
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row g-3">
                 <div class="col-md-6">
                     <label class="form-label">Марка</label>
                     <select name="brand" class="form-select">

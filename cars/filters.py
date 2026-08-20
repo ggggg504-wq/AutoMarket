@@ -5,6 +5,17 @@ from cars.models import Car
 
 class CarsFilter(django_filters.FilterSet):
     search = django_filters.CharFilter(method='filter_by_text')
+    ordering = django_filters.OrderingFilter(
+        fields=('price', 'created_at', 'year'),
+
+        field_labels={
+            'price': 'Цена по возрастанию',
+            '-price': 'Цена по убыванию',
+            'created_at': 'Сначала новые',
+            '-created_at': 'Сначала старые',
+            'year': 'По году выпуска',
+        }
+    )
     brand = django_filters.CharFilter(field_name="brand__name", lookup_expr='icontains')
     city = django_filters.CharFilter(lookup_expr='icontains')
     transmission = django_filters.CharFilter(lookup_expr='icontains')
@@ -23,5 +34,5 @@ class CarsFilter(django_filters.FilterSet):
 
     class Meta:
         model = Car
-        fields = ['search','brand', 'city', 'transmission',
+        fields = ['ordering', 'search','brand', 'city', 'transmission',
                   'fuel', 'price_min', 'price_max', 'year_min', 'year_max']
