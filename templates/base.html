@@ -5,55 +5,70 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AutoMarket</title>
-    {# Load the django_bootstrap5 library #}
-    {# Load CSS and JavaScript separately#}
-    {% bootstrap_css %}
+  {% bootstrap_css %}
 </head>
 <body>
   <nav class="navbar navbar-expand-lg bg-light">
-
-  <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'home' %}">Auto Market</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'home' %}">Главная</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'cars' %}">Автомобили</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Избранное</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Подать объявление</a>
-        </li>
-      </ul>
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'home' %}">Auto Market</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'home' %}">Главная</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'cars' %}">Автомобили</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Избранное</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Подать объявление</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto me-4 mb-2 mb-lg-0">
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="#">{{ user.username }}</a>
+            </li>
+            <li class="nav-item">
+              <form method="post" action="{% url 'logout' %}" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="nav-link btn btn-link">Выйти</button>
+              </form>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}">Войти</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
   {% block content %}
   {% endblock %}
   <footer class="bg-dark text-white mt-5 py-4">
     <div class="container text-center">
-        <h5>AutoMarket</h5>
-        <p class="mb-2">Покупка и продажа автомобилей по всему Казахстану</p>
-
-        <div class="mb-3">
-            <a href="{% url 'home' %}" class="text-white text-decoration-none me-3">Главная</a>
-            <a href="#" class="text-white text-decoration-none me-3">Автомобили</a>
-            <a href="#" class="text-white text-decoration-none me-3">Избранное</a>
-            <a href="#" class="text-white text-decoration-none">Подать объявление</a>
-        </div>
-
-        <small class="text-secondary">
-            © 2026 AutoMarket. Все права защищены.
-        </small>
+      <h5>AutoMarket</h5>
+      <p class="mb-2">Покупка и продажа автомобилей по всему Казахстану</p>
+      <div class="mb-3">
+        <a href="{% url 'home' %}" class="text-white text-decoration-none me-3">Главная</a>
+        <a href="#" class="text-white text-decoration-none me-3">Автомобили</a>
+        <a href="#" class="text-white text-decoration-none me-3">Избранное</a>
+        <a href="#" class="text-white text-decoration-none">Подать объявление</a>
+      </div>
+      <small class="text-secondary">
+        © 2026 AutoMarket. Все права защищены.
+      </small>
     </div>
-</footer>
+  </footer>
   {% bootstrap_javascript %}
 </body>
 </html>
