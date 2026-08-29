@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils.text import slugify
 
@@ -39,6 +40,7 @@ class Car(models.Model):
         ('atyrau', 'Атырау'),
     ]
 
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name='cars')
     model = models.CharField(max_length=100)
     year = models.PositiveIntegerField()
@@ -50,6 +52,7 @@ class Car(models.Model):
     description = models.TextField(blank=True)
     engine = models.DecimalField(max_digits=4, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return f'{self.brand.name} {self.model}'
