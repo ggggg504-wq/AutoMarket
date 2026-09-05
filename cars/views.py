@@ -4,7 +4,6 @@ from .filters import CarsFilter
 from .forms import CarForm
 from .models import Car
 from django.core.paginator import Paginator
-from django.contrib.auth.decorators import login_required
 
 def car(request, car_id):
     car = get_object_or_404(Car, id=car_id)
@@ -12,9 +11,13 @@ def car(request, car_id):
 
 
 def cars(request):
-    qs_filter = CarsFilter(request.GET, queryset=Car.objects.all())
+    qs_filter = CarsFilter(
+        request.GET,
+        queryset=Car.objects.filter(is_active=True)
+    )
+
     car_list = qs_filter.qs
-    paginator = Paginator(car_list, 1)
+    paginator = Paginator(car_list, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     params = request.GET.copy()
@@ -36,3 +39,34 @@ def create_car(request):
             return redirect('cars')
         else:
             return render(request, 'car_form.html', {'form': form})
+
+def edit_car(request, car_id):
+    car = get_object_or_404(Car, id=car_id, owner=request.user)
+
+    if request.method == 'POST':
+        form = CarForm(request.POST, instance=car)
+
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+        else:
+            return render(request, 'car_form.html', {'form': form})
+
+    else:
+        form = CarForm(instance=car)
+        return render(request, 'car_form.html', {'form': form})
+
+def delete_car(request, car_id):
+    car = get_object_or_404(Car, id=car_id, owner=request.user)
+
+    if request.method == 'POST':
+        car.delete()
+        return redirect('profile')
+
+def toggle_car(request, car_id):
+    car = get_object_or_404(Car, id=car_id, owner=request.user)
+    if request.method == 'POST':
+        car.is_active = not car.is_active
+        car.save()
+        return redirect('profile')
+

@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="card border-0 shadow-sm rounded-4 mb-5">
+        <div class="card-body p-4">
+
+            <h3 class="fw-bold mb-1">{{ user.username }}</h3>
+            <p class="text-muted mb-0">Личный кабинет</p>
+
+        </div>
+    </div>
+
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1">Ваши объявления</h2>
+            <p class="text-muted mb-0">
+                Управление вашими автомобилями
+            </p>
+        </div>
+
+        <a href="{% url 'car_create' %}" class="btn btn-dark">
+            + Подать объявление
+        </a>
+    </div>
+
+    <div class="row g-4">
+        {% for car in cars %}
+
+        <div class="col-12 col-md-6 col-lg-4">
+
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100">
+
+                <div class="bg-light d-flex align-items-center justify-content-center"
+                     style="height: 210px;">
+                    <span class="text-muted">
+                        Фото автомобиля
+                    </span>
+                </div>
+
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex justify-content-between
+                                align-items-start mb-2">
+
+                        <div>
+                            <h4 class="fw-bold mb-1">
+                                {{ car.brand.name }} {{ car.model }}
+                            </h4>
+
+                            <p class="text-muted mb-0">
+                                {{ car.year }} · {{ car.get_city_display }}
+                            </p>
+                        </div>
+
+                    {% if car.is_active %}
+                        <span class="badge bg-success-subtle text-success rounded-3">
+                            Активно
+                        </span>
+                    {% else %}
+                        <span class="badge bg-secondary-subtle text-secondary rounded-3">
+                            Неактивно
+                        </span>
+                    {% endif %}
+
+
+                    </div>
+
+
+                    <h4 class="fw-bold my-3">
+                        {{ car.price }}
+                    </h4>
+
+
+                    <div class="d-flex flex-wrap gap-2">
+
+                        <span class="badge text-bg-light border rounded-2 px-3 py-2">
+                            {{ car.engine }}
+                        </span>
+
+                        <span class="badge text-bg-light border rounded-2 px-3 py-2">
+                            {{ car.get_transmission_display }}
+                        </span>
+
+                        <span class="badge text-bg-light border rounded-2 px-3 py-2">
+                            {{ car.get_fuel_display }}
+                        </span>
+
+                        <span class="badge text-bg-light border rounded-2 px-3 py-2">
+                            {{ car.mileage }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card-footer bg-white border-0 px-4 pb-4">
+
+                    <div class="d-flex gap-2">
+
+                        <a href="{% url 'car_edit' car.id %}" class="btn btn-outline-dark rounded-3 flex-grow-1">
+                            Изменить
+                        </a>
+
+
+                    {% if car.is_active %}
+                    <form method="post" action="{% url 'toggle_car' car.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-secondary rounded-3">
+                            Снять с публикации
+                        </button>
+                    </form>
+                {% else %}
+                    <form method="post" action="{% url 'toggle_car' car.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-success rounded-3">
+                            Опубликовать
+                        </button>
+                    </form>
+                {% endif %}
+
+
+                    <form method="post" action="{% url 'delete_car' car.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger rounded-3">
+                            Удалить
+                        </button>
+                    </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    {% endfor %}
+</div>
+
+{% endblock %}

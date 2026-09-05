@@ -52,7 +52,7 @@ class Car(models.Model):
     description = models.TextField(blank=True)
     engine = models.DecimalField(max_digits=4, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
-
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return f'{self.brand.name} {self.model}'
