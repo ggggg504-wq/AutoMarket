@@ -56,3 +56,21 @@ class Car(models.Model):
 
     def __str__(self):
         return f'{self.brand.name} {self.model}'
+
+class Favorite(models.Model):
+    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['car', 'user'],
+                name='unique_favorite'
+            )
+        ]
+
+    def __str__(self):
+        return f'{self.user.username} {self.car.brand.name} {self.car.model}'
+
+

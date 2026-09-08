@@ -23,7 +23,7 @@
             <a class="nav-link" href="{% url 'cars' %}">Автомобили</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Избранное</a>
+            <a class="nav-link" href="{% url 'favorites' %}">Избранное</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'car_create' %}">Подать объявление</a>
@@ -60,9 +60,9 @@
       <p class="mb-2">Покупка и продажа автомобилей по всему Казахстану</p>
       <div class="mb-3">
         <a href="{% url 'home' %}" class="text-white text-decoration-none me-3">Главная</a>
-        <a href="#" class="text-white text-decoration-none me-3">Автомобили</a>
-        <a href="#" class="text-white text-decoration-none me-3">Избранное</a>
-        <a href="#" class="text-white text-decoration-none">Подать объявление</a>
+        <a href="{% url 'cars' %}" class="text-white text-decoration-none me-3">Автомобили</a>
+        <a href="{% url 'favorites' %}" class="text-white text-decoration-none me-3">Избранное</a>
+        <a href="{% url 'car_create' %}" class="text-white text-decoration-none">Подать объявление</a>
       </div>
       <small class="text-secondary">
         © 2026 AutoMarket. Все права защищены.

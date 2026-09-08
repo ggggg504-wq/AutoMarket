@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="mb-5">
+        <h2 class="fw-bold mb-1">Избранное</h2>
+        <p class="text-muted mb-0">
+            Автомобили, которые вы сохранили
+        </p>
+    </div>
+
+    <div class="row g-4">
+
+        {% for favorite in favorites %}
+
+        <div class="col-12 col-md-6 col-lg-4">
+
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100">
+
+                <div class="bg-light d-flex align-items-center justify-content-center"
+                     style="height: 210px;">
+                    <span class="text-muted">
+                        Фото автомобиля
+                    </span>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <h4 class="fw-bold mb-1">
+                        {{ favorite.car.brand }} {{ favorite.car.model }}
+                    </h4>
+
+                    <p class="text-muted mb-3">
+                        {{ favorite.car.year }} · {{ favorite.car.get_city_display }}
+                    </p>
+
+                    <h4 class="fw-bold mb-3">
+                        {{ favorite.car.price }} ₸
+                    </h4>
+
+                    <div class="d-flex flex-wrap gap-2">
+
+                        <span class="badge text-bg-light border rounded-2 px-3 py-2">
+                            {{ favorite.car.engine }}
+                        </span>
+
+                        <span class="badge text-bg-light border rounded-2 px-3 py-2">
+                            {{ favorite.car.get_transmission_display }}
+                        </span>
+
+                        <span class="badge text-bg-light border rounded-2 px-3 py-2">
+                            {{ favorite.car.get_fuel_display }}
+                        </span>
+
+                        <span class="badge text-bg-light border rounded-2 px-3 py-2">
+                            {{ favorite.car.mileage }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="card-footer bg-white border-0 px-4 pb-4">
+
+                    <div class="d-flex gap-2">
+
+                        <a href="{% url 'car_detail' favorite.car.id %}"
+                           class="btn btn-dark rounded-3 flex-grow-1">
+                            Подробнее
+                        </a>
+
+                        <form method="post" action="{% url 'favorite_car' favorite.car.id %}">
+                            {% csrf_token %}
+                            <button type="submit"
+                                    class="btn btn-outline-danger rounded-3">
+                                Удалить
+                            </button>
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="text-center py-5">
+            <h5 class="fw-bold">Избранное пока пусто</h5>
+            <p class="text-muted">
+                Здесь будут отображаться сохранённые автомобили.
+            </p>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
