@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load car_filters %}
 {% block content %}
 
 <div class="container py-5">
@@ -73,7 +73,7 @@
 
 
                     <h4 class="fw-bold my-3">
-                        {{ car.price }}
+                        {{ car.price|price_format }} ₸
                     </h4>
 
 

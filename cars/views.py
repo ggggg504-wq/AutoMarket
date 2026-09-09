@@ -2,12 +2,15 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .filters import CarsFilter
 from .forms import CarForm
-from .models import Car, Favorite
+from .models import Car, Favorite, Brand
 from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
 
 def car(request, car_id):
-    car = get_object_or_404(Car, id=car_id)
+    car = get_object_or_404(
+        Car.objects.select_related('brand'),
+        id=car_id
+    )
 
     is_favorite = (
         request.user.is_authenticated
@@ -35,6 +38,7 @@ def cars(request):
         ).select_related('brand')
     )
 
+    brands = Brand.objects.all()
     car_list = qs_filter.qs
     paginator = Paginator(car_list, 10)
     page_number = request.GET.get('page')
@@ -48,7 +52,9 @@ def cars(request):
         {
             'filter': qs_filter,
             'params': params.urlencode(),
-            'page_obj': page_obj
+            'page_obj': page_obj,
+            'brands': brands,
+
         }
     )
 
@@ -56,7 +62,7 @@ def cars(request):
 def create_car(request):
     if request.method == 'GET':
         form = CarForm()
-        return render(request, 'car_form.html', {'form': form})
+        return render(request, 'car_form.html', {'form': form, 'is_edit': False})
 
     elif request.method == 'POST':
         form = CarForm(request.POST)
@@ -66,7 +72,7 @@ def create_car(request):
             car.save()
             return redirect('cars')
         else:
-            return render(request, 'car_form.html', {'form': form})
+            return render(request, 'car_form.html', {'form': form, 'is_edit': False})
 
 @login_required
 def edit_car(request, car_id):
@@ -79,11 +85,11 @@ def edit_car(request, car_id):
             form.save()
             return redirect('profile')
         else:
-            return render(request, 'car_form.html', {'form': form})
+            return render(request, 'car_form.html', {'form': form, 'is_edit': True})
 
     else:
         form = CarForm(instance=car)
-        return render(request, 'car_form.html', {'form': form})
+        return render(request, 'car_form.html', {'form': form, 'is_edit': True})
 
 @login_required
 @require_POST

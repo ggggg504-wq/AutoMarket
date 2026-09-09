@@ -1,8 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-
+from django.contrib.auth.decorators import login_required
 from cars.models import Car
 
 
@@ -19,6 +18,9 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
 
+@login_required
 def profile(request):
-    cars = Car.objects.filter(owner=request.user)
-    return render(request, 'profile.html',{'cars': cars})
+    cars = Car.objects.filter(
+        owner=request.user
+    ).select_related('brand')
+    return render(request, 'profile.html', {'cars': cars})

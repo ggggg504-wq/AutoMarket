@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load car_filters %}
 {% block content %}
 
 <div class="container mb-5">
@@ -51,81 +51,12 @@
                     <select name="brand" class="form-select">
                         <option value="">Все марки</option>
 
-                        <option value="toyota" {% if filter.form.brand.value == 'toyota' %}selected{% endif %}>
-                            Toyota
-                        </option>
+                        {% for brand in brands %}
 
-                        <option value="bmw" {% if filter.form.brand.value == 'bmw' %}selected{% endif %}>
-                            BMW
+                        <option value="{{ brand.name }}" {% if filter.form.brand.value == brand.name %}selected{% endif %}>
+                            {{ brand.name }}
                         </option>
-
-                        <option value="mercedes-benz" {% if filter.form.brand.value == 'mercedes-benz' %}selected{% endif %}>
-                            Mercedes-Benz
-                        </option>
-
-                        <option value="audi" {% if filter.form.brand.value == 'audi' %}selected{% endif %}>
-                            Audi
-                        </option>
-
-                        <option value="volkswagen" {% if filter.form.brand.value == 'volkswagen' %}selected{% endif %}>
-                            Volkswagen
-                        </option>
-
-                        <option value="ford" {% if filter.form.brand.value == 'ford' %}selected{% endif %}>
-                            Ford
-                        </option>
-
-                        <option value="chevrolet" {% if filter.form.brand.value == 'chevrolet' %}selected{% endif %}>
-                            Chevrolet
-                        </option>
-
-                        <option value="honda" {% if filter.form.brand.value == 'honda' %}selected{% endif %}>
-                            Honda
-                        </option>
-
-                        <option value="nissan" {% if filter.form.brand.value == 'nissan' %}selected{% endif %}>
-                            Nissan
-                        </option>
-
-                        <option value="mazda" {% if filter.form.brand.value == 'mazda' %}selected{% endif %}>
-                            Mazda
-                        </option>
-
-                        <option value="hyundai" {% if filter.form.brand.value == 'hyundai' %}selected{% endif %}>
-                            Hyundai
-                        </option>
-
-                        <option value="kia" {% if filter.form.brand.value == 'kia' %}selected{% endif %}>
-                            Kia
-                        </option>
-
-                        <option value="lexus" {% if filter.form.brand.value == 'lexus' %}selected{% endif %}>
-                            Lexus
-                        </option>
-
-                        <option value="volvo" {% if filter.form.brand.value == 'volvo' %}selected{% endif %}>
-                            Volvo
-                        </option>
-
-                        <option value="skoda" {% if filter.form.brand.value == 'skoda' %}selected{% endif %}>
-                            Skoda
-                        </option>
-
-                        <option value="subaru" {% if filter.form.brand.value == 'subaru' %}selected{% endif %}>
-                            Subaru
-                        </option>
-
-                        <option value="porsche" {% if filter.form.brand.value == 'porsche' %}selected{% endif %}>
-                            Porsche
-                        </option>
-
-                        <option value="land-rover" {% if filter.form.brand.value == 'land-rover' %}selected{% endif %}>
-                            Land Rover
-                        </option>
-
-                        <option value="jeep" {% if filter.form.brand.value == 'jeep' %}selected{% endif %}>
-                            Jeep
-                        </option>
+                        {% endfor %}
                     </select>
                 </div>
 
@@ -281,13 +212,13 @@
                             <h4>{{ car.brand.name }} {{ car.model }}</h4>
                         </a>
 
-                        <h5>{{ car.price }} ₸</h5>
+                        <h5>{{ car.price|price_format }} ₸</h5>
 
                         <p>
                             {{ car.year }} •
                             {{ car.engine }} •
-                            {{ car.fuel }} •
-                            {{ car.city }}
+                            {{ car.get_fuel_display }} •
+                            {{ car.get_city_display }}
                         </p>
 
                         <p>{{ car.description }}</p>
