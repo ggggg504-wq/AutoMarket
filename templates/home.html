@@ -1,52 +1,246 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load car_filters %}
+
 {% block content %}
 
-<div class="container">
+<section class="bg-light py-5">
+    <div class="container py-4">
+        <div class="row align-items-center">
 
-    <h1 class="mt-3">Найди машину своей мечты</h1>
-    <h3 class="mb-5">Покупка и продажа машин по всему Казахстану</h3>
+            <div class="col-lg-7">
+                <span class="badge text-bg-dark mb-3 px-3 py-2">
+                    Auto Market
+                </span>
 
-    <h4 class="mb-3">Популярные марки</h4>
+                <h1 class="display-4 fw-bold mb-3">
+                    Найдите автомобиль,<br>
+                    который вам подходит
+                </h1>
 
-    <div class="btn-group mb-5">
-        <button class="btn btn-outline-dark">BMW</button>
-        <button class="btn btn-outline-dark">Mercedes Benz</button>
-        <button class="btn btn-outline-dark">Audi</button>
-        <button class="btn btn-outline-dark">Toyota</button>
-        <button class="btn btn-outline-dark">Lexus</button>
+                <p class="lead text-secondary mb-4">
+                    Покупка и продажа автомобилей по всему Казахстану.
+                    Просматривайте актуальные объявления и находите свой автомобиль.
+                </p>
+
+                <div class="d-flex gap-2 flex-wrap">
+                    <a href="{% url 'cars' %}" class="btn btn-dark btn-lg px-4">
+                        Смотреть автомобили
+                    </a>
+
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'car_create' %}"
+                           class="btn btn-outline-dark btn-lg px-4">
+                            Подать объявление
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login' %}"
+                           class="btn btn-outline-dark btn-lg px-4">
+                            Войти
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-lg-5 mt-5 mt-lg-0">
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                    <img
+                        src="{% static 'images/img_1.png' %}"
+                        class="img-fluid"
+                        style="height: 300px; width: 100%; object-fit: cover;"
+                        alt="Автомобиль"
+                    >
+
+                    <div class="card-body p-4">
+                        <h5 class="mb-1">Автомобили по всему Казахстану</h5>
+                        <p class="text-secondary mb-0">
+                            Удобный поиск, фильтры и актуальные объявления.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<section class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="fw-bold mb-1">Популярные марки</h3>
+            <p class="text-secondary mb-0">
+                Найдите автомобиль любимой марки
+            </p>
+        </div>
+
+        <a href="{% url 'cars' %}"
+           class="text-decoration-none text-dark fw-semibold">
+            Все автомобили →
+        </a>
     </div>
 
-    <h4 class="mb-4">Последние объявления</h4>
+    <div class="row g-3">
 
-    <div class="row">
+        <div class="col-6 col-md">
+            <a href="{% url 'cars' %}?search=BMW"
+               class="btn btn-outline-dark w-100 py-3">
+                BMW
+            </a>
+        </div>
+
+        <div class="col-6 col-md">
+            <a href="{% url 'cars' %}?search=Mercedes"
+               class="btn btn-outline-dark w-100 py-3">
+                Mercedes-Benz
+            </a>
+        </div>
+
+        <div class="col-6 col-md">
+            <a href="{% url 'cars' %}?search=Audi"
+               class="btn btn-outline-dark w-100 py-3">
+                Audi
+            </a>
+        </div>
+
+        <div class="col-6 col-md">
+            <a href="{% url 'cars' %}?search=Toyota"
+               class="btn btn-outline-dark w-100 py-3">
+                Toyota
+            </a>
+        </div>
+
+        <div class="col-6 col-md">
+            <a href="{% url 'cars' %}?search=Lexus"
+               class="btn btn-outline-dark w-100 py-3">
+                Lexus
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- Latest cars -->
+<section class="container pb-5">
+
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+            <h3 class="fw-bold mb-1">Последние объявления</h3>
+            <p class="text-secondary mb-0">
+                Недавно добавленные автомобили
+            </p>
+        </div>
+
+        <a href="{% url 'cars' %}"
+           class="btn btn-outline-dark">
+            Смотреть все
+        </a>
+    </div>
+
+
+    <div class="row g-4">
 
         {% for car in cars %}
 
-        <div class="col-md-4">
-            <div class="card h-100">
-                <img src="{% static 'images/img_1.png' %}" class="card-img-top" height="220" alt="Mercedes-Benz E-Класс 220">
+            <div class="col-12 col-md-6 col-lg-4">
 
-                <div class="card-body">
-                    <h5 class="card-title">{{ car.brand.name }} {{ car.model }}</h5>
-                    <p class="card-text fw-bold">{{ car.price|price_format }} ₸</p>
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+
+                    <img
+                        src="{% static 'images/img_1.png' %}"
+                        class="card-img-top"
+                        style="height: 220px; object-fit: cover;"
+                        alt="{{ car.brand.name }} {{ car.model }}"
+                    >
+
+                    <div class="card-body p-4">
+
+                        <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                            <h5 class="card-title fw-bold mb-0">
+                                {{ car.brand.name }} {{ car.model }}
+                            </h5>
+                        </div>
+
+                        <h5 class="fw-bold mb-3">
+                            {{ car.price|price_format }} ₸
+                        </h5>
+
+                        <p class="text-secondary mb-2">
+                            {{ car.year }}
+                            •
+                            {{ car.engine }}
+                            •
+                            {{ car.get_fuel_display }}
+                        </p>
+
+                        <p class="text-secondary mb-4">
+                            {{ car.get_city_display }}
+                        </p>
+
+                        <a
+                            href="{% url 'car_detail' car.id %}"
+                            class="btn btn-dark w-100"
+                        >
+                            Подробнее
+                        </a>
+
+                    </div>
+
                 </div>
 
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">{{ car.year }} • {{ car.engine }} • {{ car.get_fuel_display }}</li>
-                    <li class="list-group-item">{{ car.get_city_display }}</li>
-                </ul>
+            </div>
 
-                <div class="card-body">
-                    <a href="{% url 'car_detail' car.id %}" class="btn btn-outline-dark">Подробнее</a>
+        {% empty %}
+
+            <div class="col-12">
+                <div class="text-center py-5">
+                    <h5>Пока нет объявлений</h5>
+                    <p class="text-secondary">
+                        Здесь появятся последние предложения автомобилей.
+                    </p>
                 </div>
             </div>
-        </div>
+
         {% endfor %}
 
+    </div>
+
+</section>
 
 
-</div>
+<section class="container pb-5">
+
+    <div class="bg-dark text-white rounded-4 p-5 text-center">
+
+        <h3 class="fw-bold mb-3">
+            Хотите продать автомобиль?
+        </h3>
+
+        <p class="text-white-50 mb-4">
+            Разместите своё объявление и найдите покупателя.
+        </p>
+
+        {% if user.is_authenticated %}
+
+            <a href="{% url 'car_create' %}"
+               class="btn btn-light px-4">
+                Подать объявление
+            </a>
+
+        {% else %}
+
+            <a href="{% url 'login' %}"
+               class="btn btn-light px-4">
+                Войти и разместить объявление
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</section>
 
 {% endblock %}

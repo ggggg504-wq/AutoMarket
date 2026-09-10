@@ -9,7 +9,8 @@ from django.views.decorators.http import require_POST
 def car(request, car_id):
     car = get_object_or_404(
         Car.objects.select_related('brand'),
-        id=car_id
+        id=car_id,
+        is_active=True
     )
 
     is_favorite = (
@@ -143,7 +144,8 @@ def favorite_car(request, car_id):
 @login_required
 def favorites(request):
     favorites = Favorite.objects.filter(
-        user=request.user
+        user=request.user,
+        car__is_active = True
     ).select_related(
         'car',
         'car__brand'
