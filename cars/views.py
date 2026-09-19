@@ -5,13 +5,17 @@ from .forms import CarForm
 from .models import Car, Favorite, Brand
 from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
+from django.http import Http404
 
 def car(request, car_id):
     car = get_object_or_404(
         Car.objects.select_related('brand'),
         id=car_id,
-        is_active=True
     )
+
+
+    if not car.is_active and car.owner != request.user:
+        raise Http404("Объявление не найдено")
 
     is_favorite = (
         request.user.is_authenticated
