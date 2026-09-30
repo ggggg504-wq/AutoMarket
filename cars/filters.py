@@ -11,8 +11,8 @@ class CarsFilter(django_filters.FilterSet):
         field_labels={
             'price': 'Цена по возрастанию',
             '-price': 'Цена по убыванию',
-            'created_at': 'Сначала новые',
-            '-created_at': 'Сначала старые',
+            'created_at': 'Сначала старые',
+            '-created_at': 'Сначала новые',
             'year': 'По году выпуска',
         }
     )

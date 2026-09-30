@@ -98,6 +98,40 @@
 
         {% endfor %}
 
+        {% if favorites.has_other_pages %}
+        <div class="col-12">
+            <nav class="mt-4">
+                <ul class="pagination justify-content-center">
+
+                    {% if favorites.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link"
+                               href="?page={{ favorites.previous_page_number }}">
+                                ← Назад
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    <li class="page-item disabled">
+                        <span class="page-link">
+                            {{ favorites.number }} из {{ favorites.paginator.num_pages }}
+                        </span>
+                    </li>
+
+                    {% if favorites.has_next %}
+                        <li class="page-item">
+                            <a class="page-link"
+                               href="?page={{ favorites.next_page_number }}">
+                                Вперёд →
+                            </a>
+                        </li>
+                    {% endif %}
+
+                </ul>
+            </nav>
+        </div>
+        {% endif %}
+
     </div>
 
 </div>
